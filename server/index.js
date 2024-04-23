@@ -1,6 +1,7 @@
 const express = require('express');
 // import { createTodo, updateTodo } from './types.js';
 const { createTodo, updateTodo } =  require('./types.js');
+const { todo } = require('./db/index.js');
 
 const port = 3000;
 
@@ -12,11 +13,14 @@ app.listen(port);
 
 // Creating a Schema
 
-app.get('/', (req,res) => {
-
+app.get('/', async (req,res) => {
+    const todos = await todo.find({});
+    res.json({
+        todos
+    })
 })
 
-app.post('/todo', (req,res) => {
+app.post('/todo', async (req,res) => {
     const createPayload = req.body;
     const parsedPayload = createTodo.safeParse(createPayload);
     if(!parsedPayload.success)
@@ -26,12 +30,21 @@ app.post('/todo', (req,res) => {
         })
         return;
      }
+     await todo.create({
+        title : parsedPayload.title,
+        description : parsedPayload.description,
+        completed : false,
+     })
+
+    res.status(200).json({
+        msg : "To-Do Created",
+    })
 
     // On Success, Transfer it to Mongo DB
 })
 
 
-app.post('/completed', (req,res) => {
+app.post('/completed', async (req,res) => {
     const update_Payload = req.body;
     const parsed_Playload = updateTodo.safeParse(update_Payload);
     if(!parsed_Playload.success)
@@ -41,6 +54,16 @@ app.post('/completed', (req,res) => {
         })
         return;
      }
+
+     await todo.update({
+        _id : req.body._id
+     }, {
+        completed: true,
+     })
+
+     res.status(200).json({
+        msg : "To-do completed"
+     })
 
     //  On Success, Transfer to MongoDB
 })
