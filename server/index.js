@@ -3,7 +3,7 @@ const express = require('express');
 const { createTodo, updateTodo } =  require('./types.js');
 const { todo } = require('./db/index.js');
 
-const port = 3000;
+const port = 5000;
 
 const app = express();
 app.use(express.json());
@@ -16,7 +16,7 @@ app.listen(port);
 app.get('/', async (req,res) => {
     const todos = await todo.find({});
     res.json({
-        todos
+        todos,
     })
 })
 
@@ -31,8 +31,8 @@ app.post('/todo', async (req,res) => {
         return;
      }
      await todo.create({
-        title : parsedPayload.title,
-        description : parsedPayload.description,
+        title : createPayload.title,
+        description : createPayload.description,
         completed : false,
      })
 
@@ -55,11 +55,14 @@ app.post('/completed', async (req,res) => {
         return;
      }
 
-     await todo.update({
-        _id : req.body._id
-     }, {
+     await todo.update(
+        {
+            _id : req.body._id
+        }, 
+        {
         completed: true,
-     })
+        }
+    )
 
      res.status(200).json({
         msg : "To-do completed"
@@ -67,3 +70,5 @@ app.post('/completed', async (req,res) => {
 
     //  On Success, Transfer to MongoDB
 })
+
+app.listen(3000);
