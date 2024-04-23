@@ -4,7 +4,7 @@ const cors = require('cors');
 const { createTodo, updateTodo } =  require('./types.js');
 const { todo } = require('./db/index.js');
 
-const port = 5000;
+const port = 3000;
 
 const app = express();
 app.use(cors());
@@ -12,8 +12,16 @@ app.use(express.json());
 app.listen(port);
 
 
+var num_Requests = 0;
+
+setInterval(() => {
+    num_Requests = 0;
+    // console.log(num_Requests);
+}, 2000)
+
 
 // Creating a Schema
+
 
 app.get('/', async (req,res) => {
     const todos = await todo.find({});
@@ -73,4 +81,26 @@ app.post('/completed', async (req,res) => {
     //  On Success, Transfer to MongoDB
 })
 
-app.listen(3000);
+
+// (req,res,next) => {
+//     if(num_Requests!=0)
+//     {
+//          num_Requests++;
+//          console.log("Incremented")
+//     }
+//     if(num_Requests==0)
+//      {
+//         num_Requests = 1;
+//         console.log("Set to One");
+//      }
+    
+//      if(num_Requests > 5)
+//      {
+//       res.status(404).send("Rate - Limiter");
+//      }
+//      else
+//       {
+//         next();
+//       }
+// }, 
+  
