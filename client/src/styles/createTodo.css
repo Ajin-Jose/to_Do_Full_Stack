@@ -1,0 +1,46 @@
+#heading_Container {
+    /* border: 2px solid black; */
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 
+
+#heading_Container div p {
+    color: red;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+
+} 
+
+#add_To_Do_Container{
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+#title_Input {
+    font-size: large;
+    padding: 5px;
+    width: 28%;
+    border: 1.5px solid black;
+}
+
+#desc_Input {
+    font-size: large;
+    padding: 5px;
+    width: 38%;
+    border: 1.5px solid black;
+}
+
+#add_Button {
+    font-size: large;
+    padding: 5px;
+    width: 28%;
+    margin-left: 10px;
+    border: 1.5px solid black;
+}

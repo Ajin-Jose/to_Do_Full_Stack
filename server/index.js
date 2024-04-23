@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 // import { createTodo, updateTodo } from './types.js';
 const { createTodo, updateTodo } =  require('./types.js');
 const { todo } = require('./db/index.js');
@@ -6,6 +7,7 @@ const { todo } = require('./db/index.js');
 const port = 5000;
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.listen(port);
 
